@@ -2,15 +2,14 @@ import java.util.*;
 import java.io.*;
 
 public class summerRise {
-    private static String text;
+    private static String text = "";
 
     public static void main (String[]args) {
 	try{
 	String filename = args[0];
 	Scanner scan = new Scanner(new File(filename));
-	while (scan.hasNextLine()) {
-	    System.out.println(scan.nextLine());
-	    text += scan.nextLine();
+	while (scan.hasNext()) {
+	    text += scan.nextLine() + "\n";
 	}
 	}catch(FileNotFoundException e) {
 	    System.out.println("File not found");
