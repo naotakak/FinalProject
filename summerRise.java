@@ -5,7 +5,7 @@ public class summerRise {
   private static String text = "";
   private ArrayList<String>paras = new ArrayList<String>();
   private static String[] para;
-  private static ArrayList<String>words = new ArrayList<String>();
+  private static String[][]words;
 
   public static void paraSplit(String txt) {
     para = txt.split("\n\n");
@@ -15,19 +15,29 @@ public class summerRise {
     txt =  txt.replace(", ", " ");
     txt =  txt.replace(". ", " ");
     txt =  txt.replace(".\n\n", " ");
+    txt =  txt.replace(".\n", " ");
     //Trying to replace the last period of the article with nothing, still does not work.
-    if (txt.endsWith(".")) {
-      txt = txt.substring(0,txt.length() - 1);
+    if (txt.endsWith(".\n") || txt.endsWith(".")) {
+      txt = txt.substring(0,txt.length() - 2);
     }
+    txt = txt.replace("\n", "");
     return txt;
   }
 
   //Trying to split each word and put them into an ArrayList. Did not finish, splitted the whole text file but did not start keeping track of number of occurences.
-  public static void wordCount(String txt) {
+  public static int wordCount(String txt) {
     txt = removePunctuation(txt);
-    for(String word : txt.split(" ")) {
-    words.add(word);
-}
+    txt = txt.toLowerCase();
+    int count = 1;
+    String[]temp = txt.split(" ");
+    Arrays.sort(temp);
+    System.out.println(Arrays.toString(temp));
+    for (int i = 0; i < temp.length -1 ; i ++) {
+	if (!temp[i].equals(temp[i+1])) {
+	    count += 1;
+	}
+    }
+    return count;
   }
 
 
@@ -47,9 +57,10 @@ public class summerRise {
     loadText(args[0]);
     paraSplit(text);
     wordCount(text);
-    for (int i = 0; i < words.size(); i ++) {
+    /*for (int i = 0; i < words.size(); i ++) {
       System.out.println(words.get(i));
-    }
+      }*/
+    System.out.println(wordCount(text));
     //System.out.println(Arrays.toString(para));
   }
 }
