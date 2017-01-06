@@ -1,7 +1,3 @@
-blah blah blah
+Hi, my name is Xavier.
 
-blah
-
-xavier chen
-
-...
+Nice to meet you, Xavier.
