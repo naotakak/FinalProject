@@ -16,7 +16,6 @@ public class summerRise {
 	txt =  txt.replace(". ", " ");
 	txt =  txt.replace(".\n\n", " ");
 	txt =  txt.replace(".\n", " ");
-	//Trying to replace the last period of the article with nothing, still does not work.
 	if (txt.endsWith(".\n") || txt.endsWith(".")) {
 	    txt = txt.substring(0,txt.length() - 2);
 	}
@@ -24,7 +23,6 @@ public class summerRise {
 	return txt;
     }
     
-    //Trying to split each word and put them into an ArrayList. Did not finish, splitted the whole text file but did not start keeping track of number of occurences.
     public static String wordCount(String txt) {
 	txt = removePunctuation(txt);
 	txt = txt.toLowerCase();
@@ -39,18 +37,27 @@ public class summerRise {
 	}
 	System.out.println(count);
 	words = new String[count][2];
-	int index = 0;
 	for (int i = 0; i < words.length ; i ++) {
 	    words[i][1] = "0";
 	}
+	/*This is trying to compare the current word to the next word in temp. If they are not the same,
+	then the current word is added to the words array in words[i][0], and words[i][1] is set to 1.
+	If they are the same, then 1 is supposed to be added to words[i][1]. The point of the index variable
+	is in case of repeated elements in the temp array - this will allow for counting the # of occurences
+	instead of just skipping over them in theory.
+	*/
+	int index = 0;
 	for (int i = 0; i < temp.length - 1; i ++) {
 	    if (!temp[i].equals(temp[i + 1])) {
-		words[i][0] = temp[i];
-		words[i][1] = "" + (Integer.parseInt(words[i][1]) + 1);
-	    }
-	    else if (temp[i].equals(temp[i + 1])){
-		words[index][1] = "" + (Integer.parseInt(words[index][1]) + 1);
+		words[index][0] = temp[i + 1];
+		words[index][1] = "1";
+		System.out.println(index);
 		index ++;
+	    }
+	    else {
+		words[index - 1][1] = "" + (Integer.parseInt(words[index - 1][1]) + 1);
+		System.out.println("x");
+		//index ++;
 	    }
 	}
         String s = "";
@@ -77,7 +84,6 @@ public class summerRise {
     public static void main (String[]args) {
 	loadText(args[0]);
 	paraSplit(text);
-	wordCount(text);
     /*for (int i = 0; i < words.size(); i ++) {
       System.out.println(words.get(i));
       }*/
