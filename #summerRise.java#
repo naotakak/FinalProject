@@ -48,7 +48,7 @@ public class summerRise {
 		words[i][0] = temp[i];
 		words[i][1] = "" + (Integer.parseInt(words[i][1]) + 1);
 	    }
-	    else if (temp[i].equals(temp[i + 1])){
+	    else {
 		words[index][1] = "" + (Integer.parseInt(words[index][1]) + 1);
 		index ++;
 	    }
