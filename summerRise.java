@@ -41,13 +41,32 @@ public class summerRise {
     txt = txt.toLowerCase();
     int count = 1;
     String[]temp = txt.split(" ");
-    Arrays.sort(temp);
+    Arrays. sort(temp);
+    /*Trying to put everything to an ArrayList so I can remove it easily then replace the other parts of the code
+    with the ArrayList rather than the array. However, it does not work in the sense that it does not remove
+    the irrelevant words completely. If an irrelevant word that is sorted at the very end and has more than
+    one occurence, it does not remove it. 
+    */
+    ArrayList<String>tempArrList = new ArrayList<String>();
+    for (int i = 0; i <temp.length; i++){
+    tempArrList.add(temp[i]);
+  }
     System.out.println(Arrays.toString(temp));
+    for(int i = 0; i <tempArrList.size(); i ++) {
+      if (irrelevant.contains(tempArrList.get(i))) {
+        tempArrList.remove(i);
+      }
+    }
+    for (int i = 0; i < tempArrList.size(); i ++) {
+    System.out.println(tempArrList.get(i));
+  }
+
     for (int i = 0; i < temp.length - 1 ; i ++) {
       if (!temp[i].equals(temp[i+1])) {
         count += 1;
       }
     }
+
     System.out.println(count);
     words = new String[count][2];
     for (int i = 0; i < words.length ; i ++) {
@@ -82,6 +101,7 @@ public class summerRise {
       s += words[i][1] + "  ";
     }
     System.out.println(Arrays.deepToString(words));
+    System.out.println(irrelevant.contains("b"));
     return s;
   }
 
