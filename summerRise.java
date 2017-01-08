@@ -6,7 +6,19 @@ public class summerRise {
   private ArrayList<String>paras = new ArrayList<String>();
   private static String[] para;
   private static String[][]words;
+  private static ArrayList<String>irrelevant = new ArrayList<String>();
 
+  public static void addIrrelevant (){
+    try{
+      Scanner scan = new Scanner(new File("irrelevant.txt"));
+      while (scan.hasNext()) {
+        irrelevant.add(scan.nextLine());
+      }
+    }catch(FileNotFoundException e) {
+      System.out.println("File not found");
+    }
+
+  }
   public static void paraSplit(String txt) {
     para = txt.split("\n\n");
   }
@@ -24,6 +36,7 @@ public class summerRise {
   }
 
   public static String wordCount(String txt) {
+    addIrrelevant();
     txt = removePunctuation(txt);
     txt = txt.toLowerCase();
     int count = 1;
@@ -88,10 +101,10 @@ public class summerRise {
   public static void main (String[]args) {
     loadText(args[0]);
     paraSplit(text);
-    /*for (int i = 0; i < words.size(); i ++) {
-    System.out.println(words.get(i));
-  }*/
   System.out.println(wordCount(text));
+  /*for (int i = 0; i < irrelevant.size(); i ++) {
+  System.out.println(irrelevant.get(i));
+}*/
   //System.out.println(Arrays.toString(para));
 }
 }
