@@ -52,12 +52,15 @@ public class summerRise {
 	for (int i = 0; i <temp.length; i++){
 	    tempArrList.add(temp[i]);
 	}
-	System.out.println(Arrays.toString(temp));
-	System.out.println(tempArrList);
-	for(int i = 0; i <tempArrList.size(); i ++) {
-	    String tempWord = tempArrList.get(i);
-	    if (irrelevant.contains(tempArrList.get(i))) {
-		tempArrList.remove(tempWord);
+	//System.out.println(Arrays.toString(temp));
+	//System.out.println(tempArrList);
+	int tempArrCounter = 0;
+        while (tempArrCounter < tempArrList.size()) {
+	    if (irrelevant.contains(tempArrList.get(tempArrCounter))) {
+		tempArrList.remove(tempArrList.get(tempArrCounter));
+	    }
+	    else {
+		tempArrCounter ++;
 	    }
 	}
 	for (int i = 0; i < tempArrList.size(); i ++) {
