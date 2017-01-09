@@ -5,6 +5,7 @@ public class summerRise {
   private static String text = "";
   private ArrayList<String>paras = new ArrayList<String>();
   private static String[] para;
+  private static String[][] sentencePoints;
   private static String[][]words;
   private static ArrayList<String>irrelevant = new ArrayList<String>();
 
@@ -23,14 +24,62 @@ public class summerRise {
     para = txt.split("\n\n");
   }
 
+  public static void sentenceSplit(String txt) {
+    String[]sentencePointsTemp = txt.split("(?<!\\w\\.\\w.)(?<![A-Z][a-z]\\.)(?<=\\.|\\?)(\\s|[A-Z].*)");
+    sentencePoints = new String[sentencePointsTemp.length][2];
+    for (int i = 0; i < sentencePointsTemp.length; i++) {
+      sentencePoints[i][0] = sentencePointsTemp[i];
+      sentencePoints[i][1] = "0";
+    }
+
+  }
+  //Supposed to sort array based on the second dimension
+  /*public static void sortTwoArray(String[][]) {
+
+  }*/
+  public static void assignPoints(String txt) {
+    sentenceSplit(txt);
+    //System.out.println("test");
+    for (int i = 0; i < sentencePoints.length; i ++) {
+      String tempSentence = sentencePoints[i][0].toLowerCase();
+      tempSentence = removePunctuation(tempSentence);
+      System.out.println(tempSentence);
+      for (int n = 0; n < words.length; n++) {
+        if (tempSentence.contains(words[n][0])) {
+          if (Integer.parseInt(words[n][1]) > 1) {
+            sentencePoints[i][1] = Integer.toString(Integer.parseInt(sentencePoints[i][1]) + (Integer.parseInt(words[n][1]) - 1));
+          }
+        }
+      }
+    }
+    System.out.println((Arrays.deepToString(sentencePoints)).replace("\n", "\\n"));
+  }
   public static String removePunctuation(String txt) {
+    txt = txt.replace("\"", "" );
+    txt = txt.replace(",\"", "" );
     txt =  txt.replace(", ", " ");
     txt =  txt.replace(". ", " ");
     txt =  txt.replace(".\n\n", " ");
     txt =  txt.replace(".\n", " ");
-    if (txt.endsWith(".\n") || txt.endsWith(".")) {
+    txt =  txt.replace("! ", " ");
+    txt =  txt.replace("!\n\n", " ");
+    txt =  txt.replace("!\n", " ");
+    txt =  txt.replace("? ", " ");
+    txt =  txt.replace("?\n\n", " ");
+    txt =  txt.replace("?\n", " ");
+    if (txt.endsWith(".\n")) {
       txt = txt.substring(0,txt.length() - 2);
     }
+    else if (txt.endsWith(".")) {
+      txt = txt.substring(0,txt.length() - 1);
+    }
+    else if (txt.endsWith("?")) {
+      txt = txt.substring(0,txt.length() - 1);
+    }
+    else if (txt.endsWith("?\n")) {
+      txt = txt.substring(0,txt.length() - 2);
+    }
+
     txt = txt.replace("\n", "");
     return txt;
   }
@@ -43,10 +92,7 @@ public class summerRise {
     String[]temp = txt.split(" ");
     Arrays.sort(temp);
     /*Trying to put everything to an ArrayList so I can remove it easily then replace the other parts of
-    the code
-    with the ArrayList rather than the array. However, it does not work in the sense that it does not remove
-    the irrelevant words completely. If an irrelevant word that is sorted at the very end and has more than
-    one occurence, it does not remove it.
+    the code with the ArrayList rather than the array.
     */
     ArrayList<String>tempArrList = new ArrayList<String>();
     for (int i = 0; i <temp.length; i++){
@@ -127,6 +173,7 @@ public class summerRise {
     loadText(args[0]);
     paraSplit(text);
     wordCount(text);
+    assignPoints(text);
     /*for (int i = 0; i < irrelevant.size(); i ++) {
     System.out.println(irrelevant.get(i));
   }*/
