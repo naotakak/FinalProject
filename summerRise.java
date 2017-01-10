@@ -52,7 +52,7 @@ public class summerRise {
 		}
 	    }
 	}
-	System.out.println((Arrays.deepToString(sentencePoints)).replace("\n", "\\n"));
+	//System.out.println((Arrays.deepToString(sentencePoints)).replace("\n", "\\n"));
     }
     public static String removePunctuation(String txt) {
 	txt = txt.replace("\"", "" );
@@ -171,8 +171,14 @@ public class summerRise {
 	paraSplit(text);
 	wordCount(text);
 	assignPoints(text);
-	System.out.println(makeParagraph(sentencePoints, 
-					 (sentencePoints.length / 2)));
+	try {
+	    if (Integer.parseInt(args[1]) <= sentencePoints.length) {
+		System.out.println(makeParagraph(sentencePoints, 
+						 (Integer.parseInt(args[1]))));
+	    }
+	}catch (NumberFormatException e) {
+	    System.out.println("Format: summerRise.java [filename] [number of sentences]");
+	}
 	/*for (int i = 0; i < irrelevant.size(); i ++) {
 	  System.out.println(irrelevant.get(i));
 	  }*/
