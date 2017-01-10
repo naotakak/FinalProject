@@ -45,14 +45,14 @@ public class summerRise {
 	    for (int n = 0; n < words.length; n++) {
 		if (tempSentence.contains(words[n][0])) {
 		    if (Integer.parseInt(words[n][1]) > 1) {
-			sentencePoints[i][1] = 
+			sentencePoints[i][1] =
 			    Integer.toString(Integer.parseInt(sentencePoints[i][1])
 					     + (Integer.parseInt(words[n][1]) - 1));
 		    }
 		}
 	    }
 	}
-	System.out.println((Arrays.deepToString(sentencePoints)).replace("\n", "\\n"));
+	//System.out.println((Arrays.deepToString(sentencePoints)).replace("\n", "\\n"));
     }
     public static String removePunctuation(String txt) {
 	txt = txt.replace("\"", "" );
