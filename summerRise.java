@@ -38,6 +38,8 @@ public class summerRise {
       }*/
     public static void assignPoints(String txt) {
 	sentenceSplit(txt);
+	sentencePoints[0][1] = "" + Integer.parseInt(sentencePoints[0][1]) + 2;
+	sentencePoints[sentencePoints.length - 1][1] = "" + Integer.parseInt(sentencePoints[sentencePoints.length - 1][1]) + 1;
 	for (int i = 0; i < sentencePoints.length; i ++) {
 	    String tempSentence = sentencePoints[i][0].toLowerCase();
 	    tempSentence = removePunctuation(tempSentence);
@@ -177,6 +179,8 @@ public class summerRise {
 						 (Integer.parseInt(args[1]))));
 	    }
 	}catch (NumberFormatException e) {
+	    System.out.println("Format: summerRise.java [filename] [number of sentences]");
+	}catch (ArrayIndexOutOfBoundsException e) {
 	    System.out.println("Format: summerRise.java [filename] [number of sentences]");
 	}
 	/*for (int i = 0; i < irrelevant.size(); i ++) {
