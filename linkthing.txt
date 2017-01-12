@@ -1,1 +1,2 @@
 http://boilerpipe-web.appspot.com/extract?url=<URL>&extractor=ArticleExtractor&output=text&extractImages=&token=
+https://docs.oracle.com/javase/tutorial/networking/urls/readingURL.html
