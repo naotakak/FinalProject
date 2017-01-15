@@ -4,13 +4,15 @@ import java.net.*;
 
 public class summerRise {
     private static String text = "";
-    private static String[] para;
     private static String[][] sentencePoints;
     private static String[][]words;
     private static ArrayList<String>irrelevant = new ArrayList<String>();
     private static ArrayList<String>titleWords;
     private static String title;
 
+    public summerRise() {
+    }
+    
     public static void addIrrelevant (){
 	try{
 	    Scanner scan = new Scanner(new File("irrelevant.txt"));
@@ -22,11 +24,8 @@ public class summerRise {
 	}
 
     }
-    public static void paraSplit(String txt) {
-	para = txt.split("\n\n");
-    }
 
-    public static String replaceExceptions(String txt) {
+    private static String replaceExceptions(String txt) {
 	txt = txt.replace("Mr. ", "Mr` ");
 	txt = txt.replace("Ms. ", "Ms` ");
 	txt = txt.replace("Dr. ", "Dr` ");
@@ -65,6 +64,7 @@ public class summerRise {
 	txt = txt.replace(" Z. ", " Z` ");
 	return txt;
     }
+    
     public static void sentenceSplit(String txt) {
 	txt = replaceExceptions(txt);
 	String[]sentencePointsTemp = txt.split("(?<!\\w\\.\\w.)(?<![A-Z][a-z]\\.)(?<=\\.|\\?)(\\s|[A-Z].*)");
@@ -83,25 +83,22 @@ public class summerRise {
 	for (int i = 0; i < sentencePoints.length; i ++) {
 	    String tempSentence = sentencePoints[i][0].toLowerCase();
 	    tempSentence = removePunctuation(tempSentence);
-	    //System.out.println(tempSentence);
-	    for (int y = 0; y <titleWords.size(); y++) {
+	    for (int y = 0; y < titleWords.size(); y++) {
 		if (tempSentence.contains(titleWords.get(y))) {
-		    sentencePoints[i][1] =   Integer.toString(Integer.parseInt(sentencePoints[i][1]) + 2);
+		    sentencePoints[i][1] = Integer.toString(Integer.parseInt(sentencePoints[i][1]) + 2);
 		}
 	    }
 	    for (int n = 0; n < words.length; n++) {
-		if (tempSentence.contains(words[n][0])) {
-		    if (Integer.parseInt(words[n][1]) > 1) {
-			sentencePoints[i][1] =
-			    Integer.toString(Integer.parseInt(sentencePoints[i][1])
-					     + (Integer.parseInt(words[n][1]) - 1));
-		    }
+		if (tempSentence.contains(words[n][0]) && Integer.parseInt(words[n][1]) > 1) {
+		    sentencePoints[i][1] =
+			Integer.toString(Integer.parseInt(sentencePoints[i][1])
+					 + (Integer.parseInt(words[n][1]) - 1));
 		}
 	    }
 	}
-	System.out.println((Arrays.deepToString(sentencePoints)).replace("\n", "\\n"));
     }
-    public static String removePunctuation(String txt) {
+    
+    private static String removePunctuation(String txt) {
 	txt = txt.replace("\"", "" );
 	txt = txt.replace(",\"", "" );
 	txt = txt.replace(", ", " ");
@@ -115,7 +112,9 @@ public class summerRise {
 	txt = txt.replace("?\n\n", " ");
 	txt = txt.replace("?\n", " ");
 	txt = txt.replace(": ", " ");
-	if (txt.endsWith(".\n")) {
+	txt = txt.replace(" \"\n", " ");
+	txt = txt.replace(".\"", " ");
+	if (txt.endsWith(".\"\n")) {
 	    txt = txt.substring(0,txt.length() - 2);
 	}
 	else if (txt.endsWith(".")) {
@@ -135,7 +134,6 @@ public class summerRise {
     public static void wordCount(String txt) {
 	txt = removePunctuation(txt);
 	txt = txt.toLowerCase();
-
 	int count = 1;
 	String[]temp = txt.split(" ");
 	Arrays.sort(temp);
@@ -143,7 +141,6 @@ public class summerRise {
 	for (int i = 0; i <temp.length; i++){
 	    tempArrList.add(temp[i]);
 	}
-	//System.out.println(Arrays.toString(temp));
 	int tempArrCounter = 0;
 	while (tempArrCounter < tempArrList.size()) {
 	    if (irrelevant.contains(tempArrList.get(tempArrCounter))) {
@@ -176,7 +173,6 @@ public class summerRise {
 		words[index][1] = "" + (Integer.parseInt(words[index][1]) + 1);
 	    }
 	}
-	//System.out.println(Arrays.deepToString(words));
     }
 
     public static void loadText(String filename) {
@@ -189,14 +185,13 @@ public class summerRise {
 	    tempTitle = tempTitle.toLowerCase();
 	    String[]tempTitleArr = tempTitle.split(" ");
 	    titleWords = new ArrayList<String>(Arrays.asList(tempTitleArr));
-
 	    for (int i = 0; i < titleWords.size(); i++ ) {
 		if (irrelevant.contains(titleWords.get(i))) {
 		    titleWords.remove(titleWords.get(i));
 		}
 	    }
-	    System.out.println(titleWords);
-	    System.out.println(title + "\n\n");
+	    //System.out.println(titleWords);
+	    //System.out.println(title + "\n\n");
 
 	    while (scan.hasNext()) {
 		text += scan.nextLine() + "\n";
@@ -206,18 +201,38 @@ public class summerRise {
 	}
     }
 
-    public String loadHTML(String link) {
+    public void loadHTML(String link) {
 	String s = "";
-	URL plainText = new URL(
-				"http://boilerpipe-web.appspot.com/extract?url=" +
-				link + "&extractor=ArticleExtractor&output=text&extractImages=&token=");
-	BufferedReader in = new BufferedReader(new InputStreamReader(URL.openStream()));
-	String inputLine;
-	while ((inputLine = in.readLine()) != null) {
-	    s+=inputLine;
+	try {
+	    addIrrelevant();
+	    URL plainText = new URL(
+				    "http://boilerpipe-web.appspot.com/extract?url=" +
+				    link + "&extractor=ArticleExtractor&output=text&extractImages=&token=");
+	    BufferedReader in = new BufferedReader(new InputStreamReader(plainText.openStream()));
+	    String inputLine;
+	    if ((inputLine = in.readLine()) != null) {
+		String tempTitle = inputLine.replaceAll(new String("â".getBytes("UTF-8"), "UTF-8"), "").replaceAll(new String("Â".getBytes("UTF-8"), "UTF-8"), "");
+		title = tempTitle;
+		tempTitle = removePunctuation(tempTitle);
+		tempTitle = tempTitle.toLowerCase();
+		String[]tempTitleArr = tempTitle.split(" ");
+		titleWords = new ArrayList<String>(Arrays.asList(tempTitleArr));
+		for (int i = 0; i < titleWords.size(); i++ ) {
+		    if (irrelevant.contains(titleWords.get(i))) {
+			titleWords.remove(titleWords.get(i));
+		    }
+		}
+	    }
+	    while ((inputLine = in.readLine()) != null) {
+		s+=inputLine.replaceAll(new String("â".getBytes("UTF-8"), "UTF-8"), "").replaceAll(new String("Â".getBytes("UTF-8"), "UTF-8"), "");
+	    }
+	    in.close();
+	}catch (MalformedURLException e) {
+	    e.printStackTrace();
+	}catch (IOException e) {
+	    e.printStackTrace();
 	}
-	in.close();
-	return s;
+	text += s;
     }
 
     private static int maxValue(ArrayList<String>ints) {
@@ -246,25 +261,29 @@ public class summerRise {
     }
 
     public static void main (String[]args) {
-	//loadText(args[0]);
-	System.out.println(loadHTML("http://www.cnn.com/2017/01/13/politics/house-obamacare-repeal-vote/index.html"));
-	paraSplit(text);
-	wordCount(text);
-	assignPoints(text);
-	/*
 	try {
+	    if (args.length > 2 && args[2].equals("url")) {
+		summerRise s = new summerRise();
+		s.loadHTML(args[0]);
+	    }
+	    else {
+		loadText(args[0]);
+	    }
+	    wordCount(text);
+	    assignPoints(text);
+	    System.out.println(sentencePoints.length);
+	    System.out.println(Arrays.deepToString(sentencePoints));
 	    if (Integer.parseInt(args[1]) <= sentencePoints.length) {
 		System.out.println(makeParagraph(sentencePoints,
 						 (Integer.parseInt(args[1]))));
 	    }
+	    else {
+		System.out.println("# of sentences longer than article");
+	    }
 	}catch (NumberFormatException e) {
-	    System.out.println("Format: summerRise.java [filename] [number of sentences]");
+	    System.out.println("Format: summerRise.java [url/filename] [number of sentences] [url/non-url]");
 	}catch (ArrayIndexOutOfBoundsException e) {
-	    System.out.println("Format: summerRise.java [filename] [number of sentences]");
+	    System.out.println("Format: summerRise.java [url/filename] [number of sentences] [url/non-url]");
 	}
-	/*for (int i = 0; i < irrelevant.size(); i ++) {
-	  System.out.println(irrelevant.get(i));
-	  }*/
-	//System.out.println(Arrays.toString(para));
     }
 }
