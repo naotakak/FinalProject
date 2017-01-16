@@ -5,15 +5,19 @@
   and end, as well as sentences that contain words that are found in the title. 
   Based on this, a score is calculated for each sentence in the article. The sentences with the highest
   scores are added to the final summary.
+  The URL is fed through the boilerpipe API, and then content is fetched from the resulting plain text webpage.
 <h5>Working Features</h5>
   <ul>
     <li>Summarize an article from a local text file</li>
     <li>Specify the number of sentences in the final summary</li>
-    <li>Summarize an article from a specified URL, using the boilerpipe API</li>
+    <li>SORT OF: Summarize an article from a specified URL, using the boilerpipe API (See unresolved bugs)
+    </li>
   </ul>
 <h5>Unresolved Bugs</h5>
   <ul>
-    <li>Sentence splitting slightly broken when using URL</li>
+    <li>loadHTML can be too fast for boilerpipe API and might not adding all the content on the webpage</li>
+    <li>Problems with replacing of curved quotation marks with regular plain quotation marks, which is
+    leading to sentence splitting being slightly broken on webpages using those quotations.</li>
   </ul>
 <h5>How to compile</h5>
     javac summerRise.java
