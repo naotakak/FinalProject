@@ -17,7 +17,7 @@
   <ul>
     <li>loadHTML can be too fast for boilerpipe API and might not adding all the content on the webpage</li>
     <li>Problems with replacing of curved quotation marks with regular plain quotation marks, which is
-    leading to sentence splitting being slightly broken on webpages using those quotations.</li>
+    leading to sentence splitting being broken on webpages using those quotations.</li>
   </ul>
 <h5>How to compile</h5>
     javac summerRise.java
