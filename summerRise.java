@@ -35,7 +35,6 @@ public class summerRise {
 	txt = txt.replace("Sr. ", "Sr` ");
 	txt = txt.replace("vs. ", "vs` ");
 	txt = txt.replace("... ", "``` ");
-
 	txt = txt.replace(" A. ", " A` ");
 	txt = txt.replace(" B. ", " B` ");
 	txt = txt.replace(" C. ", " C` ");
@@ -224,7 +223,8 @@ public class summerRise {
 		}
 	    }
 	    while ((inputLine = in.readLine()) != null) {
-		s+=inputLine.replaceAll(new String("â".getBytes("UTF-8"), "UTF-8"), "").replaceAll(new String("Â".getBytes("UTF-8"), "UTF-8"), "");
+		s+=inputLine.replaceAll(new String("â".getBytes("UTF-8"), "UTF-8"), "").replaceAll(new String("Â".getBytes("UTF-8"), "UTF-8"), "").replaceAll(new String(",".getBytes("UTF-8"), "UTF-8"), ",")
+		    .replaceAll(new String("’".getBytes("UTF-8"), "UTF-8"), "'").replaceAll(new String("”".getBytes("UTF-8"), "UTF-8"), "\"").replaceAll(new String("“".getBytes("UTF-8"), "UTF-8"), "\"");
 	    }
 	    in.close();
 	}catch (MalformedURLException e) {
