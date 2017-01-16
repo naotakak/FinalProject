@@ -189,9 +189,6 @@ public class summerRise {
 		    titleWords.remove(titleWords.get(i));
 		}
 	    }
-	    //System.out.println(titleWords);
-	    //System.out.println(title + "\n\n");
-
 	    while (scan.hasNext()) {
 		text += scan.nextLine() + "\n";
 	    }
@@ -210,7 +207,7 @@ public class summerRise {
 	    BufferedReader in = new BufferedReader(new InputStreamReader(plainText.openStream()));
 	    String inputLine;
 	    if ((inputLine = in.readLine()) != null) {
-		String tempTitle = inputLine.replaceAll(new String("â".getBytes("UTF-8"), "UTF-8"), "").replaceAll(new String("Â".getBytes("UTF-8"), "UTF-8"), "");
+		String tempTitle = inputLine.replaceAll(new String("Ã¢".getBytes("UTF-8"), "UTF-8"), "").replaceAll(new String("Ã‚".getBytes("UTF-8"), "UTF-8"), "");
 		title = tempTitle;
 		tempTitle = removePunctuation(tempTitle);
 		tempTitle = tempTitle.toLowerCase();
@@ -223,8 +220,10 @@ public class summerRise {
 		}
 	    }
 	    while ((inputLine = in.readLine()) != null) {
-		s+=inputLine.replaceAll(new String("â".getBytes("UTF-8"), "UTF-8"), "").replaceAll(new String("Â".getBytes("UTF-8"), "UTF-8"), "").replaceAll(new String(",".getBytes("UTF-8"), "UTF-8"), ",")
-		    .replaceAll(new String("’".getBytes("UTF-8"), "UTF-8"), "'").replaceAll(new String("”".getBytes("UTF-8"), "UTF-8"), "\"").replaceAll(new String("“".getBytes("UTF-8"), "UTF-8"), "\"");
+		//s+=inputLine.replaceAll(new String("Ã¢".getBytes("UTF-8"), "UTF-8"), "'").replaceAll(new String("Ã‚".getBytes("UTF-8"), "UTF-8"), "\"").replaceAll("[\u2018\u2019\u201A\u201B\u2032\u2035]", "'")
+		// .replaceAll("[\u201C\u201D\u201E\u201F\u2033\u2036]", "\"");
+		s+=inputLine;//.replaceAll("Ã¢", "'").replaceAll("Ã‚", "\"");//.replaceAll("[\u2018\u2019\u201A\u201B\u2032\u2035]", "'")
+		    //.replaceAll("[\u201C\u201D\u201E\u201F\u2033\u2036]", "\"");
 	    }
 	    in.close();
 	}catch (MalformedURLException e) {
@@ -271,8 +270,6 @@ public class summerRise {
 	    }
 	    wordCount(text);
 	    assignPoints(text);
-	    System.out.println(sentencePoints.length);
-	    System.out.println(Arrays.deepToString(sentencePoints));
 	    if (Integer.parseInt(args[1]) <= sentencePoints.length) {
 		System.out.println(makeParagraph(sentencePoints,
 						 (Integer.parseInt(args[1]))));
