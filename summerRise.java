@@ -12,7 +12,7 @@ public class summerRise {
 
     public summerRise() {
     }
-    
+
     public static void addIrrelevant (){
 	try{
 	    Scanner scan = new Scanner(new File("irrelevant.txt"));
@@ -63,7 +63,7 @@ public class summerRise {
 	txt = txt.replace(" Z. ", " Z` ");
 	return txt;
     }
-    
+
     public static void sentenceSplit(String txt) {
 	txt = replaceExceptions(txt);
 	String[]sentencePointsTemp = txt.split("(?<!\\w\\.\\w.)(?<![A-Z][a-z]\\.)(?<=\\.|\\?)(\\s|[A-Z].*)");
@@ -96,7 +96,7 @@ public class summerRise {
 	    }
 	}
     }
-    
+
     private static String removePunctuation(String txt) {
 	txt = txt.replace("\"", "" );
 	txt = txt.replace(",\"", "" );
@@ -113,6 +113,11 @@ public class summerRise {
 	txt = txt.replace(": ", " ");
 	txt = txt.replace(" \"\n", " ");
 	txt = txt.replace(".\"", " ");
+  txt = txt.replace("). ", " ");
+  txt = txt.replace(").\n", " ");
+  txt = txt.replace(").\n\n", " ");
+  txt = txt.replace(")" , "");
+  txt = txt.replace("(", "");
 	if (txt.endsWith(".\"\n")) {
 	    txt = txt.substring(0,txt.length() - 2);
 	}
