@@ -6,6 +6,13 @@
   Based on this, a score is calculated for each sentence in the article. The sentences with the highest
   scores are added to the final summary.
   The URL is fed through the boilerpipe API, and then content is fetched from the resulting plain text webpage.
+<h5>Added since demo</h5>
+  We added a bias for sentence location and for common words in the title. We also added some grammar fixes for 
+  initialed names and titles (Mr., Mrs., etc.) which would break the sentence splitting otherwise. We also tried
+  to allow for summary of a article from a link, which is slightly broken due to curly quotes and special characters.
+  <br>
+  There are some test articles in the FinalProject repo - these should be formatted correctly with the title being the
+  first line, and each sentence ending in punctuation. Paragraphs should be separated by "\n\n".
 <h5>Working Features</h5>
   <ul>
     <li>Summarize an article from a local text file</li>
